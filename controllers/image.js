@@ -2,10 +2,13 @@ const Clarifai = require('clarifai');
 
 //You must add your own API key here from Clarifai. 
 const app = new Clarifai.App({
- apiKey: '49b36f11c54d403292b70b7c20826333'
+ apiKey: process.env.API_CLARIFAI
 });
 
+
+
 const handleApiCall = (req, res) => {
+  const defaultImage = 'https://criticalhits.com.br/wp-content/uploads/2020/12/Tanjiro.jpg';
   app.models
     // HEADS UP! Sometimes the Clarifai Models can be down or not working as they are constantly getting updated.
     // A good way to check if the model you are using is up, is to check them on the clarifai website. For example,
@@ -16,7 +19,7 @@ const handleApiCall = (req, res) => {
     // .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
     // to:
     // .predict('c0c0ac362b03416da06ab3fa36fb58e3', req.body.input)
-    .predict(Clarifai.FACE_DETECT_MODEL, req.body.input)
+    .predict(Clarifai.FACE_DETECT_MODEL, req.body.input|| defaultImage)
     .then(data => {
       res.json(data);
     })
